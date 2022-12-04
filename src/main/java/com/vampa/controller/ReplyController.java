@@ -1,13 +1,15 @@
 package com.vampa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.vampa.model.Criteria;
 import com.vampa.model.ReplyDTO;
-
+import com.vampa.model.ReplyPageDTO;
 import com.vampa.service.ReplyService;
 
 @RestController
@@ -23,5 +25,19 @@ public class ReplyController {
 		replyService.enrollReply(dto);
 	}
 	
+	/* 댓글 체크 */
+	/* memberId, bookId 파라미터 */
+	/* 존재 : 1 / 존재x : 0 */
+	@PostMapping("/check")
+	public String replyCheckPOST(ReplyDTO dto) {
+		return replyService.checkReply(dto);
+	}
+	
+	/* 댓글 페이징 */
+	@GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ReplyPageDTO replyListPOST(Criteria cri) {
+		System.out.println("cri : " + cri);
+		return replyService.replyList(cri);
+	}
 
 }

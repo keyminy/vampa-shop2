@@ -153,6 +153,8 @@
 				type : "post",
 				url : "/reply/enroll"
 			}).done(res=>{
+				/*팝업창 닫히기 전, 부모 창(goodsDetail.jsp)의 댓글을 최신화*/
+				$(opener.location).attr("href", "javascript:replyListInit();");
 				window.close();//팝업창 닫힘
 			}).fail(err=>{
 				

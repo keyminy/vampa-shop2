@@ -274,19 +274,19 @@ a{
   	background-color: #1347e7;
   }
   
-  /* 리뷰 영역 */
-  	.content_bottom{
-  		width: 80%;
-  		margin : auto;
-  	}
+  /* 리뷰(댓글) 영역 */
+ 	.content_bottom{
+ 		width: 80%;
+ 		margin : auto;
+ 	}
 	.reply_content_ul{
 		list-style: none;
 	}
 	.comment_wrap{
 		position: relative;
-    	border-bottom: 1px dotted #d4d4d4;
-    	padding: 14px 0 10px 0;	
-    	font-size: 12px;
+   	border-bottom: 1px dotted #d4d4d4;
+   	padding: 14px 0 10px 0;	
+   	font-size: 12px;
 	}
 		/* 리뷰 머리 부분 */
 		.reply_top{

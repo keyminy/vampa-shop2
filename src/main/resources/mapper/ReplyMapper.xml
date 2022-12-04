@@ -8,4 +8,32 @@
   		INSERT INTO vam_reply(replyId,bookId,memberId,content,rating)
   		VALUES(reply_seq.nextval,#{bookId},#{memberId},#{content},#{rating})
   	</insert>
+  	
+  	<select id="checkReply" resultType="integer">
+  		SELECT replyId
+  		FROM vam_reply
+  		WHERE memberId= #{memberId} AND bookId = #{bookId}
+  	</select>
+  	
+  	<!-- 댓글 페이징 -->
+  	<select id="getReplyList" resultType="com.vampa.model.ReplyDTO">
+			<![CDATA[
+				SELECT * FROM
+					(
+						SELECT ROWNUM as rn, replyId, bookId, memberId, content, rating, regDate
+						FROM vam_reply
+						WHERE 
+							ROWNUM <= #{pageNum} * #{amount}
+							AND bookId = #{bookId}
+						ORDER BY regDate DESC 
+					)
+				WHERE rn > (#{pageNum}-1) * #{amount}
+			]]>
+  	</select>
+  	
+  	<select id="getReplyTotal" resultType="int">
+  		SELECT COUNT(*)
+  		FROM vam_reply
+  		WHERE bookId = #{bookId}
+  	</select>
   </mapper>

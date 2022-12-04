@@ -160,7 +160,8 @@
 				</div>
 			</div>
 			<div class="line">
-			</div>				
+			</div>		
+			<!-- 댓글 부분 -->		
 			<div class="content_bottom">
 				<div class="reply_subject">
 					<h2>리뷰</h2>
@@ -170,6 +171,47 @@
 							<button>리뷰 쓰기</button>
 						</div>
 					</c:if>
+					<div class="reply_not_div">
+						<!-- 댓글이 없는 경우, '댓글이 없습니다' 문구 삽입 -->
+					</div>
+					<ul class="reply_content_ul">
+						<!-- 댓글이 존재하는 경우, 댓글 '페이징 댓글 정보'가 삽입 -->
+<!-- 						<li>
+							<div class="comment_wrap">
+								<div class="reply_top">
+									<span class="id_span"></span>
+									<span class="date_span">2021-10-11</span>
+									<span class="rating_span">평점 : <span class="rating_value_span">4</span>점</span>
+									<a class="update_reply_btn">수정</a><a class="delete_reply_btn">삭제</a>
+								</div>
+								<div class="reply_bottom">
+									<div class="reply_bottom_txt">
+										사실 기대를 많이 읽고 시작했는데..
+									</div>
+								</div>
+							</div>
+						</li> -->
+					</ul>
+					<div class="repy_pageInfo_div">
+						<!-- 댓글 페이지 버튼이 삽입 -->
+						<ul class="pageMaker">
+						<!--	<li class="pageMaker_btn prev">
+								<a>이전</a>
+							</li>
+							<li class="pageMaker_btn">
+								<a>1</a>
+							</li>
+							<li class="pageMaker_btn">
+								<a>2</a>
+							</li>
+							<li class="pageMaker_btn active">
+								<a>3</a>
+							</li>													
+							<li class="pageMaker_btn next">
+								<a>다음</a>
+							</li>-->
+						</ul>
+					</div>
 			</div>
 			<!-- 주문 form -->
 			<form action="/order/${member.memberId}" class="order_form" method="get">
@@ -195,7 +237,6 @@
 				</ul>
 			</div>
 		</div> <!-- class="footer_nav" -->
-		
 		<div class="footer">
 			<div class="footer_container">
 				
@@ -311,13 +352,125 @@
 			/* 리뷰 쓰기 팝업창을 서버에 요청 */
 			const memberId = '${member.memberId}';
 			const bookId = '${goodsInfo.bookId}';
-			//memberId는 PathVariable방식, bookId는 쿼리스트링 방식으로 서버에 데이터 전송
-			let popUrl = "/replyEnroll/" + memberId + "?bookId="+bookId;
-			console.log(popUrl);
-			let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
-			window.open(popUrl,"리뷰 쓰기",popOption);
+			
+			$.ajax({
+				data : {
+					bookId : bookId,
+					memberId : memberId
+				},
+				url : '/reply/check',
+				type : 'POST',
+			}).done(res=>{
+				if(res === '1'){
+					alert("이미 등록된 리뷰가 존재 합니다.");
+				}else if(res === '0'){
+					//memberId는 PathVariable방식, bookId는 쿼리스트링 방식으로 서버에 데이터 전송
+					let popUrl = "/replyEnroll/" + memberId + "?bookId="+bookId;
+					console.log(popUrl);
+					let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+					window.open(popUrl,"리뷰 쓰기",popOption);
+				}
+			}).fail(err=>{
+				
+			});
 		});
- });	
+		
+		$.getJSON("/reply/list",cri,function(obj){
+			makeReplyContent(obj);
+		});
+		 
+
+ }); //$(document).ready(function(){})
+ 
+	/* 리뷰 리스트 출력 */
+	/* 댓글 페이지 정보 */
+	 const cri = {
+		bookId : '${goodsInfo.bookId}',
+		pageNum : 1,
+		amount : 10
+	}
+	/* 댓글 데이터 서버 요청 및 댓글 동적 생성 메서드 */
+	let replyListInit = function(){
+		$.getJSON("/reply/list",cri,function(obj){
+			makeReplyContent(obj);
+		});
+	};
+
+	$(document).on('click', '.pageMaker_btn a', function(e){
+		e.preventDefault();
+		let page = $(this).attr("href");
+		cri.pageNum = page;
+		//댓글 태그 최신화
+		replyListInit();
+	});
+	
+	/* 댓글(리뷰) 동적 생성 메서드 */
+	function makeReplyContent(obj){
+		if(obj.list.length === 0 ){
+			$(".reply_not_div").html('<span>리뷰가 없습니다.</span>');
+			$(".reply_content_ul").html('');
+			$(".pageMaker").html('');
+		}else{
+			//댓글 존재
+			$(".reply_not_div").html(''); //댓글 없을 때 나타나는 문구 지우기
+			const list = obj.list;
+			const pf = obj.pageInfo;
+			const userId = "${member.memberId}";
+
+			//만들어줄 댓글 리스트
+			let reply_list = '';
+			//list.forEach(function(elem,idx){
+			list.forEach(function(obj,idx){
+				reply_list += `<li>
+					<div class="comment_wrap">
+					<div class="reply_top">
+						<span class="id_span">\${obj.memberId}</span>
+						<span class="date_span">\${obj.regDate}</span>
+						<span class="rating_span">평점 : <span class="rating_value_span">\${obj.rating}</span>점</span>`
+						if(obj.memberId===userId){
+							reply_list += '<a class="update_reply_btn" href="'+ obj.replyId +'">수정</a><a class="delete_reply_btn" href="'+ obj.replyId +'">삭제</a>';
+						}
+				reply_list+=`
+						</div><!--<div class="reply_top">-->
+						<div class="reply_bottom">
+							<div class="reply_bottom_txt">
+								\${obj.content}
+							</div>
+						</div><//<div class="reply_bottom">
+					</div><!--<div class="comment_wrap"> -->
+				</li>`;
+			});
+			$(".reply_content_ul").html(reply_list);	
+			
+			/* 페이지 버튼 */
+			let reply_pageMaker = '';		
+			/* prev */
+			if(pf.prev){
+				let prev_num = pf.pageStart -1;
+				reply_pageMaker += '<li class="pageMaker_btn prev">';
+				reply_pageMaker += '<a href="'+ prev_num +'">이전</a>';
+				reply_pageMaker += '</li>';	
+			}
+			/* numbre btn */
+			for(let i = pf.pageStart; i < pf.pageEnd+1; i++){
+				reply_pageMaker += '<li class="pageMaker_btn ';
+				if(pf.cri.pageNum === i){
+					reply_pageMaker += 'active';
+				}
+				reply_pageMaker += '">';
+				reply_pageMaker += '<a href="'+i+'">'+i+'</a>';
+				reply_pageMaker += '</li>';
+			}
+			/* next */
+			if(pf.next){
+				let next_num = pf.pageEnd +1;
+				reply_pageMaker += '<li class="pageMaker_btn next">';
+				reply_pageMaker += '<a href="'+ next_num +'">다음</a>';
+				reply_pageMaker += '</li>';	
+			}
+			$(".pageMaker").html(reply_pageMaker);			
+		}
+	}
 </script>
 </body>
 </html>
