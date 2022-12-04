@@ -125,4 +125,9 @@ public class BookServiceImpl implements BookService{
 		goodsInfo.setImageList(adminMapper.getAttachInfo(bookId));
 		return goodsInfo;
 	}
+
+	@Override
+	public BookVO getBookIdName(int bookId) {
+		return bookMapper.getBookIdName(bookId);
+	}
 }

@@ -100,4 +100,15 @@ public class BookController {
 		model.addAttribute("goodsInfo",bookService.getGoodsInfo(bookId));
 		return "goodsDetail";
 	}
+	
+	/* 리뷰 등록 팝업창 요청을 처리하는 URL 매핑 메서드 */
+	/* 리뷰 쓰기 */
+	@GetMapping("/replyEnroll/{memberId}")
+	public String replyEnrollWindowGET(@PathVariable("memberId") String memberId,int bookId
+			,Model model) {
+		BookVO book = bookService.getBookIdName(bookId);
+		model.addAttribute("bookInfo",book);
+		model.addAttribute("memberId",memberId);
+		return "/replyEnroll";//replyEnroll.jsp 페이지 반환
+	}
 }

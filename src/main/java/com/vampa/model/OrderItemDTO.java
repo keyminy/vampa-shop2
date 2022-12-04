@@ -23,13 +23,10 @@ public class OrderItemDTO {
     private int savePoint;
     
 	/* DB테이블 존재 하지 않는 데이터 */
-    
 	/* 할인 적용된 가격 */
     private int salePrice;
-    
 	/* 총 가격(할인 적용된 가격 * 주문 수량) */
     private int totalPrice;
-    
 	/* 총 획득 포인트(상품 한개 구매 시 획득 포인트 * 수량) */
     private int totalSavePoint;
 

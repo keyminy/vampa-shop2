@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.vampa.mapper.ReplyMapper">
+  	<!-- 댓글 등록 -->
+  	<insert id="enrollReply">
+  		INSERT INTO vam_reply(replyId,bookId,memberId,content,rating)
+  		VALUES(reply_seq.nextval,#{bookId},#{memberId},#{content},#{rating})
+  	</insert>
+  </mapper>

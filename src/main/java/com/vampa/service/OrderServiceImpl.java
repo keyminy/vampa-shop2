@@ -71,14 +71,15 @@ public class OrderServiceImpl implements OrderService{
 			//수량 셋팅
 			orderItem.setBookCount(oit.getBookCount());
 			//기본정보 셋팅
-			orderItem.initSaleTotal();
-			//List객체에 추가
+			orderItem.initSaleTotal(); //이제 bookCount정보를 아니까 가능
+			//initSaleTotal 이거하면 -> salePrice,totalPrice,savePoint,totalSavePoint구할수 있다 
+			//모든 정보를 셋팅한 orderItem객체를 List<OrderItemDTO> ords 리스트에 추가
 			ords.add(orderItem);
 		}
 		/* 주문 정보 (OrderDTO) 셋팅 */
 		ord.setOrders(ords);
 		/* 주문 작업에 필요로 한 데이터를 세팅해주는 메서드이다(추가했던것) */
-		ord.getOrderPriceInfo();
+		ord.getOrderPriceInfo(); //이거하면 orderSalePrice,orderSavePoint,orderFinalSalePrice구할 수 있게됨
 		
 		/* 2.DB 주문,주문상품(,배송정보) 넣기 */
 		/* orderId만들기 및 OrderDTO객체에 orderId값 저장 */
@@ -132,10 +133,10 @@ public class OrderServiceImpl implements OrderService{
 	@Transactional
 	public void orderCancle(OrderCancleDTO dto) {
 		/* 1.DB에 저장된 주문,주문 상품 정보 꺼내오기 */
+		/*2.회원이 지불한 금액,포인트,받았던 포인트 값 구하기 */
 		/* 회원 */
 		MemberVO member = memberMapper.getMemberInfo(dto.getMemberId());
 		
-		/*2.회원이 지불한 금액,포인트,받았던 포인트 값 구하기 */
 		/* 주문 상품 */
 		List<OrderItemDTO> ords = orderMapper.getOrderItemInfo(dto.getOrderId());
 		for(OrderItemDTO ord : ords) {
