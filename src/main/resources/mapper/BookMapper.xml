@@ -151,4 +151,22 @@
   		FROM vam_book
   		WHERE bookId = #{bookId}
   	</select>
+  	
+  	<select id="likeSelect" resultType="com.vampa.model.SelectDTO">
+  		SELECT * 
+			FROM 
+				(
+					SELECT rownum AS rn,bookId,bookName,ratingAvg,
+					(SELECT cateName
+					FROM vam_bcate 
+					WHERE vam_book.CATECODE = vam_bcate.CATECODE
+					) AS cateName
+					FROM VAM_BOOK
+					WHERE ratingAvg IS NOT null
+					ORDER BY ratingAvg DESC
+				)
+			<![CDATA[
+			WHERE rn < 9
+			]]>	
+  	</select>
   </mapper>

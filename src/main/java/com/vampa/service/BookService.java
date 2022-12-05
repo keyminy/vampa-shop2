@@ -6,6 +6,7 @@ import com.vampa.model.BookVO;
 import com.vampa.model.CateFilterDTO;
 import com.vampa.model.CateVO;
 import com.vampa.model.Criteria;
+import com.vampa.model.SelectDTO;
 
 public interface BookService {
 	/* 상품 검색 */
@@ -28,4 +29,7 @@ public interface BookService {
 	
 	/* 상품 id 이름 */
 	public BookVO getBookIdName(int bookId);
+	
+	/* 메인페이지 평점 순 상품 정보 */
+	public List<SelectDTO> likeSelect();
 }

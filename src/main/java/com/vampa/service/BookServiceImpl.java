@@ -14,6 +14,7 @@ import com.vampa.model.BookVO;
 import com.vampa.model.CateFilterDTO;
 import com.vampa.model.CateVO;
 import com.vampa.model.Criteria;
+import com.vampa.model.SelectDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -129,5 +130,17 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public BookVO getBookIdName(int bookId) {
 		return bookMapper.getBookIdName(bookId);
+	}
+
+	@Override
+	public List<SelectDTO> likeSelect() {
+		List<SelectDTO> list = bookMapper.likeSelect();
+		list.forEach(dto -> {
+			int bookId = dto.getBookId();
+			List<AttachImageVO> imageList = attachMapper.getAttachList(bookId);
+			dto.setImageList(imageList);
+		});
+		
+		return list;
 	}
 }

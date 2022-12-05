@@ -8,6 +8,7 @@ import com.vampa.model.BookVO;
 import com.vampa.model.CateFilterDTO;
 import com.vampa.model.CateVO;
 import com.vampa.model.Criteria;
+import com.vampa.model.SelectDTO;
 
 @Mapper
 public interface BookMapper {
@@ -40,4 +41,7 @@ public interface BookMapper {
 	/* 상품 id 이름 */
 	//view에서 넘어오는 bookId를 조건으로, bookName,bookId값이 담긴 BookVO객체를 리턴
 	public BookVO getBookIdName(int bookId);
+	
+	/* 메인페이지의 평점 순 상품 정보 */
+	public List<SelectDTO> likeSelect();
 }
