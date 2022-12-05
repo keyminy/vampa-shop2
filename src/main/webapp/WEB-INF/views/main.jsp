@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/main.css" />
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -108,11 +109,39 @@
 				</div>
 			</div>
 			<div class="content_area">
-				<h1>content area</h1>
+				<div class="slide_div_wrap">
+					<div class="slide_div">
+						<div>
+							<a>
+								<img src="/img/slick1.jfif">
+							</a>
+						</div>
+						<div>
+							<a>
+								<img src="/img/slick2.jfif">
+							</a>
+						</div>
+						<div>
+							<a>
+								<img src="/img/slick3.jfif">
+							</a>
+						</div>				
+					</div>	
+				</div>
 			</div>
 		</div>
 	</div>
 	<script>
+	$(document).ready(function(){
+		$(".slide_div").slick(
+				{
+					dots: true,
+					autoplay : true,
+					autoplaySpeed: 5000
+				}
+		);
+	});
+	
 	 /* gnb_area 로그아웃 버튼 작동 */
     $("#gnb_logout_button").click(function(){
         //alert("버튼 작동");
