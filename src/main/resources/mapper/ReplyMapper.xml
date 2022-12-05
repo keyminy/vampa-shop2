@@ -36,4 +36,20 @@
   		FROM vam_reply
   		WHERE bookId = #{bookId}
   	</select>
+  	
+  	<update id="updateReply">
+  		UPDATE vam_reply SET content=#{content},rating=#{rating}
+  		WHERE replyId = #{replyId}
+  	</update>
+  	
+  	<select id="getUpdateReply" resultType="com.vampa.model.ReplyDTO">
+  		select * from vam_reply
+			where replyId = #{replyId}
+  	</select>
+  	
+  	<!-- 댓글 삭제 -->
+  	<delete id="deleteReply">
+  		DELETE FROM vam_reply
+  		WHERE replyId = #{replyId}
+  	</delete>
   </mapper>

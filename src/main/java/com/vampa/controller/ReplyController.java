@@ -39,5 +39,17 @@ public class ReplyController {
 		System.out.println("cri : " + cri);
 		return replyService.replyList(cri);
 	}
+	
+	/* 댓글 수정 */
+	@PostMapping("/update")
+	public void replyModifyPOST(ReplyDTO dto) {
+		replyService.updateReply(dto);
+	}
+	
+	/* 댓글 삭제 */
+	@PostMapping("/delete")
+	public void replyDeletePOST(ReplyDTO dto) {
+		replyService.deleteReply(dto);
+	}
 
 }

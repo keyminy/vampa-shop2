@@ -40,4 +40,23 @@ public class ReplyServiceImpl implements ReplyService{
 		dto.setPageInfo(new PageDTO(cri,replyMapper.getReplyTotal(cri.getBookId())));
 		return dto;
 	}
+
+	@Override
+	public int updateReply(ReplyDTO dto) {
+		int result = replyMapper.updateReply(dto);
+		return result;
+	}
+
+	@Override
+	public ReplyDTO getUpdateReply(int replyId) {
+		return replyMapper.getUpdateReply(replyId);
+	}
+	
+	@Override
+	public int deleteReply(ReplyDTO dto) {
+		
+		int result = replyMapper.deleteReply(dto.getReplyId()); 
+		
+		return result;
+	}
 }

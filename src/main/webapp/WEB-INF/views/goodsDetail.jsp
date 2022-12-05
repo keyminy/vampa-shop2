@@ -378,7 +378,6 @@
 		$.getJSON("/reply/list",cri,function(obj){
 			makeReplyContent(obj);
 		});
-		 
 
  }); //$(document).ready(function(){})
  
@@ -403,6 +402,33 @@
 		//댓글 태그 최신화
 		replyListInit();
 	});
+	
+	/* 리뷰 수정 버튼 */
+	 $(document).on('click', '.update_reply_btn', function(e){
+			e.preventDefault();
+			let replyId = $(this).attr("href");		
+			let popUrl = "/replyUpdate?replyId=" + replyId + "&bookId=" + '${goodsInfo.bookId}' + "&memberId=" + '${member.memberId}';
+			let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+			window.open(popUrl,"리뷰 수정",popOption);
+	 });
+	
+		/* 리뷰 삭제 버튼 */
+	 $(document).on('click', '.delete_reply_btn', function(e){
+		 e.preventDefault();
+		 let replyId = $(this).attr("href");		
+		 $.ajax({
+				data : {
+					replyId : replyId,
+					bookId : '${goodsInfo.bookId}'
+				},
+				url : '/reply/delete',
+				type : 'POST',
+				success : function(result){
+					replyListInit();
+					alert('삭제가 완료되엇습니다.');
+				}
+			});		
+	 });
 	
 	/* 댓글(리뷰) 동적 생성 메서드 */
 	function makeReplyContent(obj){
@@ -469,7 +495,7 @@
 				reply_pageMaker += '</li>';	
 			}
 			$(".pageMaker").html(reply_pageMaker);			
-		}
+		}// end else
 	}
 </script>
 </body>

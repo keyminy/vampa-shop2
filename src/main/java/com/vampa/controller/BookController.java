@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.vampa.mapper.AttachMapper;
 import com.vampa.model.AttachImageVO;
 import com.vampa.model.BookVO;
 import com.vampa.model.Criteria;
 import com.vampa.model.PageDTO;
+import com.vampa.model.ReplyDTO;
 import com.vampa.service.AttachService;
 import com.vampa.service.BookService;
+import com.vampa.service.ReplyService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -35,6 +36,9 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void mainPageGET(Model model) {
@@ -111,4 +115,16 @@ public class BookController {
 		model.addAttribute("memberId",memberId);
 		return "/replyEnroll";//replyEnroll.jsp 페이지 반환
 	}
+	
+	/* 리뷰 수정 팝업창으로 가기 */
+	@GetMapping("/replyUpdate")
+	public String replyUpdateWindowGET(ReplyDTO dto,Model model) {
+		//어떤 책에 대한 수정인지 알 수있도록 책 정보 조회
+		BookVO book = bookService.getBookIdName(dto.getBookId());
+		model.addAttribute("bookInfo",book);
+		model.addAttribute("replyInfo",replyService.getUpdateReply(dto.getReplyId()));
+		model.addAttribute("memberId",dto.getMemberId());
+		return "/replyUpdate";
+	}
+	
 }
