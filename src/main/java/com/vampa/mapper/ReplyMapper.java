@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.vampa.model.Criteria;
 import com.vampa.model.ReplyDTO;
+import com.vampa.model.UpdateReplyDTO;
 
 @Mapper
 public interface ReplyMapper {
@@ -30,4 +31,10 @@ public interface ReplyMapper {
 	
 	/* 댓글 삭제 */
 	public int deleteReply(int replyId);
+	
+	/* 평점 평균 구하기 */
+	public Double getRatingAverage(int bookId);
+	
+	/* 평점 평균 반영하기 */
+	public int updateRating(UpdateReplyDTO dto);
 }
