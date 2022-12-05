@@ -157,9 +157,7 @@
 					<form id="moveForm" action="/search" method="get" >
 						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-						<c:if test="${not empty pageMaker.cri.keyword}">
-							<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-						</c:if>
+						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
 						<input type="hidden" name="type" value="${pageMaker.cri.type}">
 						<input type="hidden" name="cateCode" value="<c:out value="${pageMaker.cri.cateCode}"/>">
 					</form>
