@@ -87,14 +87,16 @@ public class BookServiceImpl implements BookService{
 
 		String type = cri.getType();
 		String[] typeArr = type.split("");
-		String[] authorArr;
+		String[] authorArr =  bookMapper.getAuthorIdList(cri.getKeyword());
+		
+		if(type.equals("A") || type.equals("AC") || type.equals("AT") || type.equals("ACT")) {
+			if(authorArr.length==0) {
+				return new ArrayList();
+			}
+		}
 		
 		for(String t : typeArr) {
 			if(t.equals("A")) {
-				authorArr = bookMapper.getAuthorIdList(cri.getKeyword());
-				if(authorArr.length==0) {
-					return filterInfoList;
-				}
 				cri.setAuthorArr(authorArr);
 			}
 		}

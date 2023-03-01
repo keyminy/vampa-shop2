@@ -11,6 +11,7 @@
 					<trim prefix="AND">
 						<choose>
 							<when test="type == 'A'.toString()">
+								<!-- 여러 개의 authorId의 조건 코드 -->
 								<trim prefixOverrides="OR">
 									<foreach item="authorId" collection="authorArr">
 										<trim prefix="OR">

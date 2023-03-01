@@ -408,7 +408,7 @@
 							$(cateSelect1)
 									.on(
 											"change",
-											function() {
+											()=> {
 												//대분류 선택값을 가져오기
 												let selectVal1 = $(this).find(
 														"option:selected")

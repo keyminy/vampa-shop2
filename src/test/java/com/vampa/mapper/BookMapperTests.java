@@ -35,7 +35,7 @@ public class BookMapperTests {
 	/* 작가 id 리스트 요청 */
 	@Test
 	public void getAuthorId() {
-		String keyword="난도";
+		String keyword="수정";
 		String[] list = mapper.getAuthorIdList(keyword);
 		System.out.println("결과 : " + list.toString());
 		for(String id : list) {
@@ -119,9 +119,9 @@ public class BookMapperTests {
 	public void getGoodsListTest4() {
 		Criteria cri = new Criteria();
 		String type = "AC";
-		String keyword = "없음";	// 카테고리에 존재하는 작가
-		//String keyword = "머스크";	// 카테고리에 존재하지 않는 작가
-		String catecode = "202001";
+		//String keyword = "수정";	// 카테고리에 존재하는 작가
+		String keyword = "머스크";	// 카테고리에 존재하지 않는 작가
+		String catecode = "101001";
 		
 		cri.setType(type);
 		cri.setKeyword(keyword);
