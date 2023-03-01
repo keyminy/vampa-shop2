@@ -69,10 +69,9 @@
   				SELECT DISTINCT /*+ INDEX_DESC(vam_author SYS_C0010168) */ b.authorid
 		  		FROM vam_author a,vam_book b
 		  		WHERE b.authorid=a.authorid 
-		  		AND authorName LIKE '%' || #{keyword,jdbcType=VARCHAR} || '%'
+		  		AND authorName LIKE '%' || #{keyword} || '%'
   			</when>
-  			<!-- keyword가 null일때 -->
-  			<otherwise> select null from dual </otherwise>
+
   		</choose>
   	</select>
   	
@@ -91,7 +90,9 @@
   	
   	<!-- 검색 대상의 카테고리 리스트 -->
   	<select id="getCateList" resultType="string">
-  		SELECT DISTINCT cateCode FROM vam_book WHERE
+  		SELECT DISTINCT cateCode 
+  		FROM vam_book 
+  		WHERE 
 			<foreach item="type" collection="typeArr">
   			<choose>
   				<when test="type == 'A'.toString()">
@@ -112,8 +113,12 @@
   	
   	<!-- 카테고리 정보(+검색대상 갯수) -->
   	<select id="getCateInfo" resultType="com.vampa.model.CateFilterDTO">
-  		SELECT DISTINCT COUNT(*) cateCount,b.cateCode,c.cateName
-  		FROM vam_book b LEFT OUTER JOIN vam_bcate c
+  		SELECT 
+  			DISTINCT COUNT(*) cateCount
+  			,b.cateCode
+  			,c.cateName
+  		FROM vam_book b 
+  		LEFT OUTER JOIN vam_bcate c
   		ON b.cateCode = c.cateCode
   		WHERE
   	<foreach collection="typeArr" item="type">
@@ -129,7 +134,8 @@
   				AND b.cateCode = #{cateCode}
   			</when>
   			<when test="type == 'T'.toString()">
-  				bookName LIKE '%' || #{keyword} || '%' AND b.cateCode = #{cateCode}
+  				bookName LIKE '%' || #{keyword} || '%' 
+  				AND b.cateCode = #{cateCode}
   			</when>
   		</choose>
   	</foreach>

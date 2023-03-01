@@ -1,6 +1,7 @@
 package com.vampa.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,11 @@ public class BookServiceImpl implements BookService{
 		log.info("getGoodsList().......");	
 		String type = cri.getType();
 		String[] typeArr = type.split("");
-		String[] authorArr = bookMapper.getAuthorIdList(cri.getKeyword());
+		String[] authorArr = 
+				((cri.getKeyword() != null) && (!"".equals(cri.getKeyword()))) ?
+						bookMapper.getAuthorIdList(cri.getKeyword()) 
+						: new String[] {}; 
+		System.out.println("authorArr : " + Arrays.toString(authorArr));
 		
 		if(type.equals("A") || type.equals("AC") || type.equals("AT") || type.equals("ACT")) {
 			if(authorArr.length==0) {
@@ -87,7 +92,10 @@ public class BookServiceImpl implements BookService{
 
 		String type = cri.getType();
 		String[] typeArr = type.split("");
-		String[] authorArr =  bookMapper.getAuthorIdList(cri.getKeyword());
+		String[] authorArr = 
+				((cri.getKeyword() != null) && (!"".equals(cri.getKeyword()))) ? 
+						bookMapper.getAuthorIdList(cri.getKeyword()) 
+						: new String[] {}; 
 		
 		if(type.equals("A") || type.equals("AC") || type.equals("AT") || type.equals("ACT")) {
 			if(authorArr.length==0) {
