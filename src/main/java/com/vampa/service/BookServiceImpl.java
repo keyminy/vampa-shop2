@@ -99,7 +99,7 @@ public class BookServiceImpl implements BookService{
 		
 		if(type.equals("A") || type.equals("AC") || type.equals("AT") || type.equals("ACT")) {
 			if(authorArr.length==0) {
-				return new ArrayList();
+				return filterInfoList;
 			}
 		}
 		

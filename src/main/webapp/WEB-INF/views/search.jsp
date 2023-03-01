@@ -52,27 +52,27 @@
 						<div class="filter_button_wrap">
 							<button class="filter_button filter_active" id="filter_button_a">국내</button>
 							<button class="filter_button" id="filter_button_b">외국</button>
-					</div>
-							<div class="filter_content filter_a">
-								<c:forEach items="${filter_info}" var="filter">
-									<c:if test="${filter.cateGroup eq '1'}">
-										<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>									
-									</c:if>
-								</c:forEach>
-							</div>
-							<div class="filter_content filter_b">
-								<c:forEach items="${filter_info}" var="filter">
-									<c:if test="${filter.cateGroup eq '2'}">
-										<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>
-									</c:if>
-								</c:forEach>
-							</div>
-							<!-- form태그로,카테고리필터의 a태그를 제어하기 -->
-							<form action="/search" id="filter_form" method="get">
-								<input type="hidden" name="keyword"/>
-								<input type="hidden" name="cateCode"/>
-								<input type="hidden" name="type"/>
-							</form>		
+						</div>
+						<div class="filter_content filter_a">
+							<c:forEach items="${filter_info}" var="filter">
+								<c:if test="${filter.cateGroup eq '1'}">
+									<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>									
+								</c:if>
+							</c:forEach>
+						</div>
+						<div class="filter_content filter_b">
+							<c:forEach items="${filter_info}" var="filter">
+								<c:if test="${filter.cateGroup eq '2'}">
+									<a href="${filter.cateCode}">${filter.cateName}(${filter.cateCount})</a>
+								</c:if>
+							</c:forEach>
+						</div>
+						<!-- form태그로,카테고리필터의 a태그를 제어하기 -->
+						<form action="/search" id="filter_form" method="get">
+							<input type="hidden" name="keyword"/>
+							<input type="hidden" name="cateCode"/>
+							<input type="hidden" name="type"/>
+						</form>		
 					</div>
 					<div class="list_search_result">
 						<table class="type_list">
@@ -250,7 +250,7 @@
 				//a태그 클릭되어졌을때, 기본 동작 막기
 				e.preventDefault();
 				/*기존 type값 A혹은 T인데, 필터링된 상품 목록 페이지로 이동은
-				카테고리 검색조건이 추가되어 type이 "AC" OR "AT"가 되는 것이다.
+				카테고리 검색조건이 추가되어 type이 "AC" OR "TC"가 되는 것이다.
 				그러므로,type에 "C"문자열을 붙여주는 코드를 추가해보자. */
 				let type ='<c:out value="${pageMaker.cri.type}"/>';
 				/* 필터링 검색 이후, 사용자가 다른 필터링 정보를 클릭하면
